@@ -1,0 +1,22 @@
+#!/bin/bash
+
+FILE="$1"
+
+DIR=$(mktemp -d docxtotxt.XXXXXXXXX)
+if [[ -z "$DIR" ]]; then
+  exit 1
+fi
+
+
+set -e
+
+trap "rm -rf $DIR" EXIT
+
+FN="$DIR/foo.docx"
+
+cp "$FILE" "$FN"
+cd "$DIR"
+
+libreoffice --headless --convert-to txt "$FN" 2>&1 | grep '^Error' && exit 1
+
+cat foo.txt
