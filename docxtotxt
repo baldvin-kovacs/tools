@@ -2,7 +2,7 @@
 
 FILE="$1"
 
-DIR=$(mktemp -d docxtotxt.XXXXXXXXX)
+DIR=$(mktemp --tmpdir -d docxtotxt.XXXXXXXXX)
 if [[ -z "$DIR" ]]; then
   exit 1
 fi
@@ -10,7 +10,7 @@ fi
 
 set -e
 
-trap "rm -rf $DIR" EXIT
+#trap "rm -rf $DIR" EXIT
 
 FN="$DIR/foo.docx"
 
